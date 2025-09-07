@@ -19,7 +19,7 @@ public class App {
 
                     Todo todo = new Todo(id, content);
 
-                    System.out.println(todo.getIdadd());
+                    System.out.println(todo.getId());
 
                     System.out.printf("%d번 할 일이 생성되었습니다.\n", id);
                 }
