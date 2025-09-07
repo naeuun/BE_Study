@@ -12,7 +12,7 @@ public class App {
             List<Todo> todos = new ArrayList<>();
             long todosLastId = 0;
 
-            while( true ){
+            while( true ) {
                 System.out.print("명령) ");
                 String cmd = scanner.nextLine().trim();
 
@@ -29,9 +29,12 @@ public class App {
                     System.out.println(todo.getId());
 
                     System.out.printf("%d번 할 일이 생성되었습니다.\n", id);
-                }
+                } else if (cmd.equals("list")) {
+                    System.out.println("번호 / 내용");
 
-                System.out.printf("입력한 명령: %s\n", cmd);
+                    todos.forEach(todo -> System.out.printf("%d / %s\n", todo.getId(), todo.getContent()));
+                }
+                System.out.printf("입력한 명령 : %s\n", cmd);
             }
         }
 
