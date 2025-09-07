@@ -4,6 +4,7 @@ package com.ll;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        System.out.printf("안녕!");
+        App app = new App();
+        app.run();
     }
 }
