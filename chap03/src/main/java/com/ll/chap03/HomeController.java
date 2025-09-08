@@ -1,10 +1,14 @@
 package com.ll.chap03;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,40 +51,15 @@ public class HomeController {
         return married ? "결혼" : "미혼";
     }
 
+    @Getter
+    @Setter
+    @ToString
+    @AllArgsConstructor
     public static class Person {
-
         private String name;
         private int age;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-
-        @Override
-        public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
-        }
-
-        public Person(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
     }
+
     @GetMapping("person1")
     @ResponseBody
     public String person(
@@ -139,5 +118,109 @@ public class HomeController {
         person.put("name", "Paul");
 
         return person;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    @ToString
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+    public static class Post{
+        @ToString.Exclude
+        @JsonIgnore
+        @EqualsAndHashCode.Include
+        private Long id;
+        private LocalDateTime createDate;
+        private LocalDateTime modifyDate;
+        @Builder.Default
+        private String subject="제목 입니다.";
+        private String body;
+    }
+
+    @GetMapping("/posts")
+    @ResponseBody
+    public List<Post> getPosts() {
+        List<Post> posts = new ArrayList<>() {{
+            add(new Post(1L, LocalDateTime.now(), LocalDateTime.now(), "제목1", "내용1"));
+            add(new Post(1L, LocalDateTime.now(), LocalDateTime.now(), "제목2", "내용2"));
+            add(new Post(1L, LocalDateTime.now(), LocalDateTime.now(), "제목3", "내용3"));
+            add(new Post(1L, LocalDateTime.now(), LocalDateTime.now(), "제목4", "내용4"));
+            add(new Post(1L, LocalDateTime.now(), LocalDateTime.now(), "제목5", "내용5"));
+        }};
+
+        return posts;
+    }
+
+    @GetMapping("/posts2")
+    @ResponseBody
+    public List<Post> getPosts2() {
+        List<Post> posts = new ArrayList<>() {{
+            add(
+                    Post
+                            .builder()
+                            .id(1L)
+                            .createDate(LocalDateTime.now())
+                            .modifyDate(LocalDateTime.now())
+                            .subject("제목1")
+                            .body("내용1")
+                            .build()
+            );
+            add(
+                    Post
+                            .builder()
+                            .id(1L)
+                            .createDate(LocalDateTime.now())
+                            .modifyDate(LocalDateTime.now())
+                            .subject("제목2")
+                            .body("내용2")
+                            .build()
+            );
+            add(
+                    Post
+                            .builder()
+                            .id(1L)
+                            .createDate(LocalDateTime.now())
+                            .modifyDate(LocalDateTime.now())
+                            .subject("제목3")
+                            .body("내용3")
+                            .build()
+            );
+        }};
+
+        return posts;
+    }
+
+    @GetMapping("/posts/1")
+    @ResponseBody
+    public Post getPost() {
+       Post post = Post
+                            .builder()
+                            .id(1L)
+                            .createDate(LocalDateTime.now())
+                            .modifyDate(LocalDateTime.now())
+                            .subject("제목1")
+                            .body("내용1")
+                            .build();
+
+        System.out.println(post);
+        return post;
+    }
+    @SneakyThrows
+    @GetMapping("/posts/2")
+    @ResponseBody
+    public Post getPost2() {
+        Post post = Post
+                .builder()
+                .id(2L)
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now())
+                .subject("제목2")
+                .body("내용2")
+                .build();
+
+        Thread.sleep(5000);
+
+        System.out.println(post);
+        return post;
     }
 }
