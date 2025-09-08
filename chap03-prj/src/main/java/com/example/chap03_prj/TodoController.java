@@ -20,6 +20,7 @@ public class TodoController {
     public List<Todo> getTodos(){
         return todos;
     }
+
     @GetMapping("/detail")
     public Todo getTodo(
             long id
@@ -32,6 +33,7 @@ public class TodoController {
                 .findFirst()
                 .orElse(null);
     }
+
     @GetMapping("/{id}")
     public Todo getTodo2(
             @PathVariable long id
@@ -44,7 +46,6 @@ public class TodoController {
                 .findFirst()
                 .orElse(null);
     }
-
 
     @GetMapping("/add")
     public Todo add (
@@ -61,4 +62,32 @@ public class TodoController {
         return todo;
     }
 
+    @GetMapping("/remove/{id}")
+    public boolean remove (
+            @PathVariable long id
+    ){
+        boolean removed = todos.removeIf(todo -> todo.getId() ==id);
+
+        return removed;
+    }
+
+    @GetMapping("/modify/{id}")
+    public boolean modify (
+            @PathVariable long id,
+            String body
+    ){
+        Todo todo = todos
+                .stream()
+                .filter(
+                        _todo -> _todo.getId() == id
+                )
+                .findFirst()
+                .orElse(null);
+
+        if(todo == null) return false;
+
+        todo.setBody(body);
+
+        return true;
+    }
 }
