@@ -1,6 +1,7 @@
 package com.example.chap03_prj;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,9 +14,37 @@ public class TodoController {
     private long todoLastId;
     private List<Todo> todos;
 
-    public TodoController(){
-        todos = new ArrayList<>();
+    public TodoController(){ todos = new ArrayList<>(); }
+
+    @GetMapping("")
+    public List<Todo> getTodos(){
+        return todos;
     }
+    @GetMapping("/detail")
+    public Todo getTodo(
+            long id
+    ){
+        return todos
+                .stream()
+                .filter(
+                        todo -> todo.getId() == id
+                )
+                .findFirst()
+                .orElse(null);
+    }
+    @GetMapping("/{id}")
+    public Todo getTodo2(
+            @PathVariable long id
+    ){
+        return todos
+                .stream()
+                .filter(
+                        todo -> todo.getId() == id
+                )
+                .findFirst()
+                .orElse(null);
+    }
+
 
     @GetMapping("/add")
     public Todo add (
