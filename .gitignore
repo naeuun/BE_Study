@@ -1,0 +1,24 @@
+# Gradle
+/build/
+.gradle/
+/gradle/wrapper/gradle-wrapper.jar
+
+# Maven
+/target/
+
+# IntelliJ IDEA
+/.idea/
+/*.iml
+/out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+/logs/
+*.log
+*.tmp
+
+# Environment
+.env
