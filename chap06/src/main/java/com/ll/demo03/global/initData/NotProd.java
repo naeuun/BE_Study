@@ -17,25 +17,21 @@ public class NotProd {
     @Bean
     public ApplicationRunner initNotprod() {
         return args -> {
-            System.out.println("NotProd.initNotprod1");
-            System.out.println("NotProd.initNotprod2");
-            System.out.println("NotProd.initNotprod3");
+            if( articleRepository.count() >0 ) return;
 
             Article article1 = Article.builder()
-                    .title("제목1")
-                    .body("내용1")
+                    .title("제목 1")
+                    .body("내용 ")
                     .build();
 
             Article article2 = Article.builder()
-                    .title("제목2")
-                    .body("내용2")
+                    .title("제목 1")
+                    .body("내용 2")
                     .build();
-            System.out.println("article1.id : " + article1.getId());
-            System.out.println("article2.id : " + article2.getId());
             articleRepository.save(article1);
             articleRepository.save(article2);
-            System.out.println("article1.id : " + article1.getId());
-            System.out.println("article2.id : " + article2.getId());
+
+            articleRepository.delete(article1);
         };
     }
 }
