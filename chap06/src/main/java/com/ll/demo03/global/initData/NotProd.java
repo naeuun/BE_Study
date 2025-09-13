@@ -58,5 +58,11 @@ public class NotProd {
         // Optional : 0~1
         Article article = articleRepository.findById(2L).get();
         List<Article> articles = articleRepository.findAll();
+
+        articleRepository.findByIdInOrderByTitleDescIdAsc(List.of(1L, 2L));
+        articleRepository.findByTitleContaining("제목");
+        articleRepository.findByTitleAndBody("제목!", "내용 2");
+
+
     }
 }
