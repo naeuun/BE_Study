@@ -1,5 +1,6 @@
 package com.ll.demo03;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,8 +13,6 @@ public class Article {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String body;
-    private String title2;
-    private String title3;
-    private String title4;
 }
