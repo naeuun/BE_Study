@@ -5,6 +5,7 @@ import com.ll.demo03.domain.article.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ public class ArticleService {
     public Article write(String title, String body) {
         Article article = Article
                 .builder()
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now())
                 .title(title)
                 .body(body)
                 .build();
