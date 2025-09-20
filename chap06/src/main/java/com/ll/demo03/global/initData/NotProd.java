@@ -35,8 +35,12 @@ public class NotProd {
     public void work1() {
         if( articleService.count() >0 ) return;
 
-        Article article1 = articleService.write("제목 1", "내용 1");
-        Article article2 = articleService.write("제목 2", "내용 2");
+        //RsData<Article> write = articleService.write("제목 1", "내용 1");
+        //Article article1 = write.getData();
+        // 이렇게 할 수도 있고 아래처럼 같이 넣을 수도 있음
+
+        Article article1 = articleService.write("제목 1", "내용 1").getData();
+        Article article2 = articleService.write("제목 2", "내용 2").getData();
 
         article2.setTitle("제목!");
 
