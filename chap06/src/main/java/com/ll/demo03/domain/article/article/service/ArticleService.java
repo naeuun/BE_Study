@@ -2,6 +2,7 @@ package com.ll.demo03.domain.article.article.service;
 
 import com.ll.demo03.domain.article.article.entity.Article;
 import com.ll.demo03.domain.article.article.repository.ArticleRepository;
+import com.ll.demo03.domain.member.member.entity.Member;
 import com.ll.demo03.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,12 @@ public class ArticleService {
         return articleRepository.count();
     }
 
-    // 리턴
-    // - 이번에 생성된 게시물의 번호
-    // - 게시물 생성에 대한 결과 메시지
-    // - 결과 코드
-    // - 실패 하는 경우 예시 : 10 분 안에 게시물 5새 이상 작성 불가
+
     @Transactional
-    public RsData<Article> write(String title, String body) {
+    public RsData<Article> write(Member author, String title, String body) {
         Article article = Article
                 .builder()
+                .author(author)
                 .title(title)
                 .body(body)
                 .build();
