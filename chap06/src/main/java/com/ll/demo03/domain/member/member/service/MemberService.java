@@ -31,12 +31,16 @@ public class MemberService{
         return RsData.of("%s님 환영합니다.".formatted(nickname), member);
     }
 
-    private Optional<Member> findByUsername(String username) {
+    public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
 
     public Member getReferenceById(long id) {
         return memberRepository.getReferenceById(id);
+    }
+
+    public long count() {
+        return memberRepository.count();
     }
 }
 
