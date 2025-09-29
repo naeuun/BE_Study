@@ -17,7 +17,7 @@ public class MemberController {
 
     @GetMapping("/join")
     @ResponseBody
-    public RsData join(
+    public RsData<Member> join(
         String username, String password, String nickname
             ){
         if (Ut.str.isBlank(username)) {
@@ -29,7 +29,11 @@ public class MemberController {
         if (Ut.str.isBlank(nickname)) {
             throw new GlobalException("400-3", "nickname(을)를 입력해주세요.");
         }
-        RsData<Member> joinRs = memberService.join(username, password, nickname);
-        return joinRs;
+        return memberService.join(username, password, nickname);
+    }
+    @GetMapping("/testThrowIllegalArgumentException")
+    @ResponseBody
+    public RsData<Member> testThrowIllegalArgumentException(){
+        throw new IllegalArgumentException("IllegalArgumentException 발생!");
     }
 }
