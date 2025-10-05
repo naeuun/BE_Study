@@ -5,15 +5,18 @@ import com.ll.demo03.domain.member.member.repository.MemberRepository;
 import com.ll.demo03.global.exceptions.GlobalException;
 import com.ll.demo03.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService{
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public RsData<Member> join(String username, String password, String nickname) {
@@ -23,8 +26,9 @@ public class MemberService{
 
         Member member = Member.builder()
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .nickname(nickname)
+                .refreshToken(UUID.randomUUID().toString())
                 .build();
 
         memberRepository.save(member);
@@ -41,6 +45,17 @@ public class MemberService{
 
     public long count() {
         return memberRepository.count();
+    }
+
+    public boolean matchPassword(String password, String encodedPassword) {
+        return passwordEncoder.matches(password, encodedPassword);
+    }
+    public Optional<Member> findById(long id) {
+        return memberRepository.findById(id);
+    }
+
+    public Optional<Member> findByRefreshToken(String refreshToken) {
+        return memberRepository.findByRefreshToken(refreshToken);
     }
 }
 

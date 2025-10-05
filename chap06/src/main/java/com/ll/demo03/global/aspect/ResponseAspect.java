@@ -1,6 +1,6 @@
 package com.ll.demo03.global.aspect;
 
-import com.ll.demo03.domain.global.rq.Rq;
+import com.ll.demo03.global.rq.Rq;
 import com.ll.demo03.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
